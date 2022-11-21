@@ -19,6 +19,9 @@ export default function Home() {
         </h1>
         <Button variant="contained"  
                 size="large"
+                onClick={() => {
+                  alert('This should take us to the Spotify Auth Login');
+                }}
                 sx={{
                   backgroundColor: "#1DB954",
                   '&:hover': {backgroundColor: '#33c065'},
