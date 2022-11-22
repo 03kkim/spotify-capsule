@@ -1,10 +1,13 @@
-import { Box, Button, CssBaseline, FormControl, MenuItem, Select, Switch, } from '@mui/material'
+import { Box, Button, FormControl, Grid, MenuItem, Select, Switch, } from '@mui/material'
 import { Stack } from '@mui/system'
 import Head from 'next/head'
-// import styles from '../styles/Home.module.css'
-
+import TextField from '@mui/material/TextField';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState } from 'react'
 import { styled } from '@mui/material/styles';
+import { seasonsArr, resolutionsArr, monthsArr, } from "../constants/encapsulateConsts"
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -54,16 +57,17 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 export default function Encapsulate() {
+  
   const [resolution, setResolution] = useState("Month");
 
   // true = all songs, false = most played
   const [mode, setMode] = useState(true);
 
   const [month, setMonth] = useState("January");
-  const [year, setYear] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [season, setSeason] = useState("");
+  const [year, setYear] = useState("2022");
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [season, setSeason] = useState("Spring");
   
 
   const handleResolutionChange = (event) => {
@@ -76,6 +80,10 @@ export default function Encapsulate() {
 
   const handleYearChange = (event) => {
     setYear(event.target.value);
+  };
+
+  const handleSeasonChange = (event) => {
+    setSeason(event.target.value);
   };
   const toggleMode = (event) => {
     if (mode) {
@@ -91,93 +99,133 @@ export default function Encapsulate() {
         <meta name="description" content="Make your capsule" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      
-      <Stack spacing={4} alignItems="center" justifyContent="flex-end" sx={{mt: "100px"}}>
-        <h1>Encapsulate your playlist!</h1>
-        <Stack spacing={4}>
-          <Stack spacing={-2} alignItems="center">
-            <h3>Mode</h3>
-            <Stack spacing={3} direction="horizontal" alignItems="center">
-              All songs
-                <MaterialUISwitch sx={{ m: 1 }} unchecked onChange={toggleMode} />
-              Most played songs
-            </Stack>
-          </Stack>
-          
-          <Stack spacing={0} alignItems="center">
-            <h3>Resolution</h3>
-            <Box sx={{ minWidth: 120 }}>
-              <FormControl fullWidth>
-                <Select
-                value={resolution}
-
-                onChange={handleResolutionChange}
-                >
-                  <MenuItem value={"Month"}>Month</MenuItem>
-                  <MenuItem value={"Season"}>Season</MenuItem>
-                  <MenuItem value={"Date Range"}>Date Range</MenuItem>
-                </Select>
-              </FormControl>
-            </Box>
-          </Stack>
-
-          
-          {resolution == "Month" ?
-            <Stack spacing={0} alignItems="center" sx={{pb: "50px"}}>
-              <Stack direction="horizontal" alignItems="center" justifyContent="center" spacing={10}>
-                <Stack spacing={0} alignItems="center">
-                  <h3>Month</h3>
-                  <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                      <Select
-                      value={month}
-                      onChange={handleMonthChange}
-                      >
-                        <MenuItem value={"January"}>January</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Box>
-                </Stack>
-                <Stack spacing={0} alignItems="center">
-                  <h3>Year</h3>
-                  <Box sx={{ minWidth: 120 }}>
-                    <FormControl fullWidth>
-                      <Select
-                      value={year}
-                      onChange={handleYearChange}
-                      >
-                        <MenuItem value={"2022"}>2022</MenuItem>
-                        
-                      </Select>
-                    </FormControl>
-                  </Box>
-                </Stack>
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{ minHeight: '100vh' }}
+      >
+        <Grid item xs={3}>
+          <h1>Encapsulate your playlist!</h1>
+        </Grid>
+        <Grid item xs={3} sx={{minHeight: "460px"}}>
+          <Stack spacing={2}>
+            <Stack spacing={-2} alignItems="center">
+              <h3>Mode</h3>
+              <Stack spacing={3} direction="row" alignItems="center">
+                All songs
+                  <MaterialUISwitch sx={{ m: 1 }} unchecked onChange={toggleMode} />
+                Most played songs
               </Stack>
-            </Stack> : 
+            </Stack>
+            <Stack spacing={0} alignItems="center">
+              <h3>Resolution</h3>
+              <Box sx={{ minWidth: 120 }}>
+                <FormControl fullWidth>
+                  <Select
+                  value={resolution}
+                  onChange={handleResolutionChange}
+                  >
+                    {resolutionsArr.map((resolution) => {return <MenuItem key = {resolution} value={resolution}>{resolution}</MenuItem>})}
+                  </Select>
+                </FormControl>
+              </Box>
+            </Stack>
+            {resolution == "Month" ?
+              <Stack spacing={0} alignItems="center">
+                <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
+                  <Stack spacing={0} alignItems="center">
+                    <h3>Month</h3>
+                    <Box sx={{ minWidth: 120 }}>
+                      <FormControl fullWidth>
+                        <Select
+                        value={month}
+                        onChange={handleMonthChange}
+                        >
+                          {monthsArr.map((month) => {return <MenuItem key = {month} value={month}>{month}</MenuItem>})}
+                        </Select>
+                      </FormControl>
+                    </Box>
+                  </Stack>
+                  <Stack spacing={0} alignItems="center">
+                    <h3>Year</h3>
+                    <Box sx={{ minWidth: 120 }}>
+                      <FormControl fullWidth>
+                        <Select
+                        value={year}
+                        onChange={handleYearChange}
+                        >
+                          {/* Years should start at the first possible year for the account accessed */}
+                          <MenuItem value={"2022"}>2022</MenuItem>
+                          
+                        </Select>
+                      </FormControl>
+                    </Box>
+                  </Stack>
+                </Stack>
+              </Stack> : 
 
-          resolution == "Season" ? 
-            <Stack spacing={0} alignItems="center" sx={{pb: "50px"}}>
-              <h3>Season</h3> 
-            </Stack> : 
+            resolution == "Season" ? 
+              <Stack spacing={0} alignItems="center">
+                <h3>Season</h3> 
+                <Box sx={{ minWidth: 120 }}>
+                      <FormControl fullWidth>
+                        <Select
+                        value={season}
+                        onChange={handleSeasonChange}
+                        >
+                          {seasonsArr.map((season) => {return <MenuItem key = {season} value={season}>{season}</MenuItem>})}
+                        </Select>
+                      </FormControl>
+                    </Box>
+              </Stack> : 
 
-            <Stack spacing={0} alignItems="center" sx={{pb: "50px"}}>
-              <h3>Date range</h3>
-            </Stack>  
-          }
-          
-
-
+              <Stack spacing={0} alignItems="center">
+                <h3>Date range</h3>
+                <Stack direction="row" spacing={2} alignItems="center">
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label="Start Date"
+                      value={startDate}
+                      onChange={(newStartDate) => {
+                        setStartDate(newStartDate);
+                      }}
+                      renderInput={(params) => (
+                        <TextField {...params} helperText={params?.inputProps?.placeholder} />
+                      )}
+                    />
+                  </LocalizationProvider>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker
+                      label="End Date"
+                      value={endDate}
+                      onChange={(newEndDate) => {
+                        setEndDate(newEndDate);
+                      }}
+                      renderInput={(params) => (
+                        <TextField {...params} helperText={params?.inputProps?.placeholder} />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </Stack>
+              </Stack>  
+            }
+          </Stack>
+        </Grid>  
+        <Grid item xs={3}>
           <Button variant="contained"  
-                  size="large"
-                  sx={{
-                    backgroundColor: "#1DB954",
-                    '&:hover': {backgroundColor: '#33c065'},
-                    color: "white",
+                    size="large"
+                    sx={{
+                      backgroundColor: "#1DB954",
+                      '&:hover': {backgroundColor: '#33c065'},
+                      color: "white",
           }}>
               Generate Playlist!
           </Button>
-        </Stack>
-      </Stack>
+        </Grid>
+      </Grid>
     </div>
   )
 }

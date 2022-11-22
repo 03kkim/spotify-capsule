@@ -16,6 +16,8 @@
     "@fontsource/roboto": "^4.5.8",
     "@mui/icons-material": "^5.10.14",
     "@mui/material": "^5.10.14",
+    "@mui/x-date-pickers": "^5.0.8",
+    "dayjs": "^1.11.6",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.4",
     "next": "13.0.4",
