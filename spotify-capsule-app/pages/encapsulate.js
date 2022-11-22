@@ -1,17 +1,13 @@
 import { Box, Button, FormControl, Grid, MenuItem, Select, Switch, } from '@mui/material'
 import { Stack } from '@mui/system'
 import Head from 'next/head'
-// import styles from '../styles/Home.module.css'
-
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
 import { useState } from 'react'
 import { styled } from '@mui/material/styles';
-
-import {seasonsArr, resolutionsArr, monthsArr} from "../constants/encapsulateConsts"
+import { seasonsArr, resolutionsArr, monthsArr, } from "../constants/encapsulateConsts"
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -110,7 +106,6 @@ export default function Encapsulate() {
         alignItems="center"
         justifyContent="center"
         style={{ minHeight: '100vh' }}
-        
       >
         <Grid item xs={3}>
           <h1>Encapsulate your playlist!</h1>
@@ -125,7 +120,6 @@ export default function Encapsulate() {
                 Most played songs
               </Stack>
             </Stack>
-            
             <Stack spacing={0} alignItems="center">
               <h3>Resolution</h3>
               <Box sx={{ minWidth: 120 }}>
@@ -139,8 +133,6 @@ export default function Encapsulate() {
                 </FormControl>
               </Box>
             </Stack>
-
-            
             {resolution == "Month" ?
               <Stack spacing={0} alignItems="center">
                 <Stack direction="row" alignItems="center" justifyContent="center" spacing={2}>
@@ -220,8 +212,6 @@ export default function Encapsulate() {
                 </Stack>
               </Stack>  
             }
-     
-            
           </Stack>
         </Grid>  
         <Grid item xs={3}>
@@ -234,7 +224,6 @@ export default function Encapsulate() {
           }}>
               Generate Playlist!
           </Button>
-          
         </Grid>
       </Grid>
     </div>
