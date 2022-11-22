@@ -3,7 +3,7 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { Button, Stack } from '@mui/material'
 
-export default function Home() {
+export default function Home({ providers }) {
   return (
     <div className={styles.container}>
       <Head>
@@ -17,11 +17,10 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to Spotify Capsule Thing!
         </h1>
+
         <Button variant="contained"  
                 size="large"
-                onClick={() => {
-                  alert('This should take us to the Spotify Auth Login');
-                }}
+                onClick={() => signIn(providers.id, {callbackUrl: "/"})}
                 sx={{
                   backgroundColor: "#1DB954",
                   '&:hover': {backgroundColor: '#33c065'},
