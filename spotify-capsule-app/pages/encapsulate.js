@@ -1,4 +1,4 @@
-import { Box, Button, CssBaseline, FormControl, Grid, MenuItem, Select, Switch, } from '@mui/material'
+import { Box, Button, FormControl, Grid, MenuItem, Select, Switch, } from '@mui/material'
 import { Stack } from '@mui/system'
 import Head from 'next/head'
 // import styles from '../styles/Home.module.css'
@@ -11,7 +11,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useState } from 'react'
 import { styled } from '@mui/material/styles';
 
-
+import {seasonsArr, resolutionsArr, monthsArr} from "../constants/encapsulateConsts"
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -116,7 +116,7 @@ export default function Encapsulate() {
           <h1>Encapsulate your playlist!</h1>
         </Grid>
         <Grid item xs={3} sx={{minHeight: "460px"}}>
-          <Stack spacing={4}>
+          <Stack spacing={2}>
             <Stack spacing={-2} alignItems="center">
               <h3>Mode</h3>
               <Stack spacing={3} direction="row" alignItems="center">
@@ -132,12 +132,9 @@ export default function Encapsulate() {
                 <FormControl fullWidth>
                   <Select
                   value={resolution}
-
                   onChange={handleResolutionChange}
                   >
-                    <MenuItem value={"Month"}>Month</MenuItem>
-                    <MenuItem value={"Season"}>Season</MenuItem>
-                    <MenuItem value={"Date Range"}>Date Range</MenuItem>
+                    {resolutionsArr.map((resolution) => {return <MenuItem key = {resolution} value={resolution}>{resolution}</MenuItem>})}
                   </Select>
                 </FormControl>
               </Box>
@@ -155,7 +152,7 @@ export default function Encapsulate() {
                         value={month}
                         onChange={handleMonthChange}
                         >
-                          <MenuItem value={"January"}>January</MenuItem>
+                          {monthsArr.map((month) => {return <MenuItem key = {month} value={month}>{month}</MenuItem>})}
                         </Select>
                       </FormControl>
                     </Box>
@@ -168,6 +165,7 @@ export default function Encapsulate() {
                         value={year}
                         onChange={handleYearChange}
                         >
+                          {/* Years should start at the first possible year for the account accessed */}
                           <MenuItem value={"2022"}>2022</MenuItem>
                           
                         </Select>
@@ -186,10 +184,7 @@ export default function Encapsulate() {
                         value={season}
                         onChange={handleSeasonChange}
                         >
-                          <MenuItem value={"Spring"}>Spring</MenuItem>
-                          <MenuItem value={"Summer"}>Summer</MenuItem>
-                          <MenuItem value={"Fall"}>Fall</MenuItem>
-                          <MenuItem value={"Winter"}>Winter</MenuItem>
+                          {seasonsArr.map((season) => {return <MenuItem key = {season} value={season}>{season}</MenuItem>})}
                         </Select>
                       </FormControl>
                     </Box>
