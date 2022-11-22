@@ -4,7 +4,7 @@ import Link from 'next/link';
 import styles from '../styles/Home.module.css'
 import { Button, Stack } from '@mui/material'
 
-export default function Home() {
+export default function Home({ providers }) {
   return (
     <div>
       <Head>
@@ -18,6 +18,7 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to Spotify Capsule Thing!
         </h1>
+
         <Link href="/encapsulate">
           <Button variant="contained"  
                   size="large"
@@ -32,6 +33,7 @@ export default function Home() {
             Login to Spotify
           </Button>
         </Link>
+
         <p className={styles.description}>
         UNDER CONSTRUCTION
         </p>
