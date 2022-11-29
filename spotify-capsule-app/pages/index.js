@@ -3,6 +3,17 @@ import Image from 'next/image'
 import Link from 'next/link';
 import styles from '../styles/Home.module.css'
 import { Button, Stack } from '@mui/material'
+import { getProviders, signIn } from "next-auth/react"
+
+export async function getServerSideProps() {
+  const providers = await getProviders();
+
+  return {
+    props: {
+      providers,
+    },
+  };
+}
 
 export default function Home({ providers }) {
   return (
@@ -20,18 +31,18 @@ export default function Home({ providers }) {
         </h1>
 
         <Link href="/encapsulate">
-          <Button variant="contained"  
-                  size="large"
-                  onClick={() => {
-                    alert('This should take us to the Spotify Auth Login');
-                  }}
-                  sx={{
-                    backgroundColor: "#1DB954",
-                    '&:hover': {backgroundColor: '#33c065'},
-                    color: "white",
-          }}>
-            Login to Spotify
-          </Button>
+          {Object.values(providers).map((provider) => (
+            <Button variant="contained"  
+                    size="large"
+                    onClick={() => signIn(provider.id, { callbackUrl: "/encapsulate"})}
+                    sx={{
+                      backgroundColor: "#1DB954",
+                      '&:hover': {backgroundColor: '#33c065'},
+                      color: "white",
+            }}>
+              Login to Spotify
+            </Button>
+          ))}
         </Link>
 
         <p className={styles.description}>
