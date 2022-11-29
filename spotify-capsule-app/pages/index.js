@@ -3,6 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link';
 import styles from '../styles/Home.module.css'
 import { Button, Stack } from '@mui/material'
+import Login from '../components/login';
+import { getProviders } from "next-auth/react"
 
 export default function Home({ providers }) {
   return (
@@ -18,8 +20,9 @@ export default function Home({ providers }) {
         <h1 className={styles.title}>
           Welcome to Spotify Capsule Thing!
         </h1>
+        <Login providers={providers}></Login>
 
-        <Link href="/encapsulate">
+        {/* <Link href="/encapsulate">
           <Button variant="contained"  
                   size="large"
                   onClick={() => {
@@ -32,7 +35,7 @@ export default function Home({ providers }) {
           }}>
             Login to Spotify
           </Button>
-        </Link>
+        </Link> */}
 
         <p className={styles.description}>
         UNDER CONSTRUCTION
@@ -58,4 +61,14 @@ export default function Home({ providers }) {
       </footer>
     </div>
   )
+}
+
+export async function getServerSideProps() {
+  const providers = await getProviders();
+
+  return {
+    props: {
+      providers,
+    },
+  };
 }
