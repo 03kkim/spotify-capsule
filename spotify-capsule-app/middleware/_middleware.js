@@ -19,8 +19,4 @@ export async function middleware(req) {
     if (!token && pathname != "/index") {
         return NextResponse.redirect("/");
     }
-
-
-
-
 }
