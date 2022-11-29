@@ -17,7 +17,7 @@ function Login({ providers }) {
                 sx={{
                   backgroundColor: "#1DB954",
                   '&:hover': {backgroundColor: '#33c065'},
-                  color: "white", }} onClick={() => signIn(provider.id, { callbackUrl: "/"})}
+                  color: "white", }} onClick={() => signIn(provider.id, { callbackUrl: "/encapsulate"})}
             >
               Login to Spotify
             </Button>
