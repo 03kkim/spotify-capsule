@@ -9,6 +9,8 @@ import { useState } from 'react'
 import { styled } from '@mui/material/styles';
 import { seasonsArr, resolutionsArr, monthsArr, } from "../constants/encapsulateConsts"
 
+import {signOut} from "next-auth/react"
+
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
   height: 34,
@@ -223,6 +225,19 @@ export default function Encapsulate() {
                       color: "white",
           }}>
               Generate Playlist!
+          </Button>
+        </Grid>
+        <Grid item xs={3}>
+          <Button variant="contained"  
+                    size="large"
+                    sx={{
+                      backgroundColor: "#FE0101",
+                      '&:hover': {backgroundColor: '#FE4E4E'},
+                      color: "white",
+                    }}
+                    onClick = {() => signOut({ callbackUrl: 'http://localhost:3000/'})}
+          >
+              Logout
           </Button>
         </Grid>
       </Grid>
