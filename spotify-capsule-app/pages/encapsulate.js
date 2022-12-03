@@ -235,7 +235,9 @@ export default function Encapsulate() {
                       '&:hover': {backgroundColor: '#FE4E4E'},
                       color: "white",
                     }}
-                    onClick = {() => signOut({ callbackUrl: 'http://localhost:3000/'})}
+                    onClick = {() => signOut(
+                      // { callbackUrl: 'http://localhost:3000/'}
+                      )}
           >
               Logout
           </Button>
