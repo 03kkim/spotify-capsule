@@ -5,11 +5,11 @@ import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useState } from 'react'
 import { styled } from '@mui/material/styles';
 import { seasonsArr, resolutionsArr, monthsArr, } from "../constants/encapsulateConsts"
-
-import {signOut} from "next-auth/react"
+import { signOut, useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import useSpotify from './useSpotify';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
   width: 62,
@@ -224,9 +224,7 @@ export default function Encapsulate() {
                       '&:hover': {backgroundColor: '#33c065'},
                       color: "white",
                     }}
-                    onClick = {() => (
-                    { callbackUrl: 'http://localhost:3000/'} //generate
-            )}
+                    onClick = {() => getPlaylists() }
           >
               Generate Playlist!
           </Button>
@@ -249,4 +247,23 @@ export default function Encapsulate() {
       </Grid>
     </div>
   )
+}
+
+function getPlaylists() {
+  const spotifyApi = useSpotify();
+  const { data: session, status} = useSession();
+  // set playlist variable with initial value as an empty list
+  const { playlists, setPlaylists } = useState([]);
+  // update
+  useEffect(() => {
+    if (spotifyApi.getAccessToken()) {
+      spotifyApi.getPlaylistItems().then((data) => {
+        setPlaylists(data.body.items)
+      });
+    }
+  }, [session, spotifyApi])
+
+  console.log(playlists);
+  return null;
+
 }
