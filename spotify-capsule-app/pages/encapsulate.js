@@ -223,7 +223,11 @@ export default function Encapsulate() {
                       backgroundColor: "#1DB954",
                       '&:hover': {backgroundColor: '#33c065'},
                       color: "white",
-          }}>
+                    }}
+                    onClick = {() => (
+                    { callbackUrl: 'http://localhost:3000/'} //generate
+            )}
+          >
               Generate Playlist!
           </Button>
         </Grid>
