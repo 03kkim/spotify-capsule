@@ -59,6 +59,31 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 }));
 
 export default function Encapsulate() {
+  const spotifyApi = useSpotify();
+  const { data: session, status} = useSession();
+
+  // set playlist variable with initial value as an empty list
+  const { playlists, setPlaylists } = useState([]);
+
+  // update
+  useEffect(() => {
+    if (spotifyApi.getAccessToken()) {
+      spotifyApi.getPlaylistTracks().then((data) => {
+        setPlaylists(data.body.items)
+      });
+    }
+  }, [session, spotifyApi])
+
+  function getPlaylists() {
+    
+    
+    
+  
+    console.log(playlists);
+    return null;
+  
+  }
+  
   
   const [resolution, setResolution] = useState("Month");
 
@@ -249,21 +274,3 @@ export default function Encapsulate() {
   )
 }
 
-function getPlaylists() {
-  const spotifyApi = useSpotify();
-  const { data: session, status} = useSession();
-  // set playlist variable with initial value as an empty list
-  const { playlists, setPlaylists } = useState([]);
-  // update
-  useEffect(() => {
-    if (spotifyApi.getAccessToken()) {
-      spotifyApi.getPlaylistItems().then((data) => {
-        setPlaylists(data.body.items)
-      });
-    }
-  }, [session, spotifyApi])
-
-  console.log(playlists);
-  return null;
-
-}
