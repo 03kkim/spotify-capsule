@@ -16,7 +16,11 @@ export async function middleware(req) {
   }
 
   if (!token && pathname == "/encapsulate") {
-    return NextResponse.redirect(`${origin}`);
+    const url = req.nextUrl.clone();
+    url.pathname = "/";
+    console.log(url);
+    return NextResponse.redirect(url);
+    // return NextResponse.redirect(`${origin}`);
   }
 }
 
